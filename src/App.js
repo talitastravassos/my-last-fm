@@ -1,16 +1,20 @@
 import React from 'react';
 import './App.scss';
+import Box from './components/Box';
 import { LastFMContext } from './context/LastFMContext';
 
 function App() {
   const [username, setUsername] = React.useState('');
   const {
-    action: { getUsernameData },
-    state: { userData },
+    action: { getUsernameData, formatMessage },
+    state: { userData, message },
   } = React.useContext(LastFMContext);
 
   React.useEffect(() => {
     console.log(userData);
+    if (userData) {
+      formatMessage(10)
+    }
   }, [userData]);
 
   const handleSubmit = async (event) => {
@@ -33,6 +37,9 @@ function App() {
           />
           <button type='submit'>GO</button>
         </form>
+      </div>
+      <div className="box-container">
+        {(userData && message) ? <Box message={message} /> : <></>}
       </div>
     </div>
   );

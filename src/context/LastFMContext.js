@@ -5,6 +5,7 @@ export const LastFMContext = createContext();
 
 export default function LastFMProvider(props) {
   const [userData, setUserData] = useState();
+  const [message, setMessage] = useState();
 
   const getUsernameData = async (username) => {
     try {
@@ -17,16 +18,35 @@ export default function LastFMProvider(props) {
         setUserData(response.data.weeklyartistchart.artist);
       }
     } catch (error) {
+      setUserData(undefined);
       console.log(error);
+    }
+  };
+
+  const formatArtist = (artist) => {
+    return ` ${artist.name} (${artist.playcount})`;
+  };
+
+  const formatMessage = (until = 5) => {
+    if (userData) {
+      let message = `My Week on LastFM:${userData.map((artist, index) =>
+        index < until ? formatArtist(artist) : ''
+      )}`;
+
+      message = message.slice(0, message.lastIndexOf(')') + 1).concat('.');
+
+      setMessage(message);
     }
   };
 
   const value = {
     action: {
       getUsernameData,
+      formatMessage,
     },
     state: {
       userData,
+      message,
     },
   };
 
