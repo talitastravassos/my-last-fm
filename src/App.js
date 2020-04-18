@@ -15,7 +15,7 @@ function App() {
     if (userData) {
       formatMessage(10)
     }
-  }, [userData]);
+  }, [userData, formatMessage]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
