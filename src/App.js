@@ -1,12 +1,16 @@
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { AllInclusive } from '@material-ui/icons';
 import React from 'react';
 import './App.scss';
 import Box from './components/Box';
+import Input from './components/Input';
 import { LastFMContext } from './context/LastFMContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+
     '& > *': {
       margin: theme.spacing(1),
       width: '25ch',
@@ -15,37 +19,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-
-  cssLabel: {
-    '&:not(hover):not($disabled):not($cssFocused):not($error)': {
-      color: '#d92323',
-    },
-    '&$cssFocused': {
-      color: '#d92323',
-    },
-  },
-  cssOutlinedInput: {
-    '&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline': {
-      borderColor: '#d92323', //default
-    },
-    '&:hover:not($disabled):not($cssFocused):not($error) $notchedOutline': {
-      borderColor: '#d92323', //hovered
-    },
-    '&$cssFocused $notchedOutline': {
-      borderColor: '#f71414', //focused
-    },
-  },
-  notchedOutline: {},
-  cssFocused: {
-    color: '#d92323',
-  },
-  error: {},
-  disabled: {},
 }));
 
 function App() {
@@ -71,28 +46,14 @@ function App() {
   return (
     <div className='App'>
       <h1>My Last Week FM</h1>
-      <div className='container-input'>
+      <div className={classes.container}>
         <form onSubmit={handleSubmit} className={classes.root}>
-          <TextField
-            label='Your LastFM Username'
-            placeholder='Your LastFM Username'
-            name='username'
+          <Input
+            name={'username'}
             value={username}
-            variant='outlined'
             onChange={(e) => setUsername(e.target.value)}
-            InputLabelProps={{
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused,
-              },
-            }}
-            InputProps={{
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              }
-            }}
+            placeholder={'Your LastFM Username'}
+            label={'LastFM Username'}
           />
           <Button
             variant='contained'
