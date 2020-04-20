@@ -1,19 +1,18 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { AllInclusive } from '@material-ui/icons';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './App.scss';
 import Box from './components/Box';
 import Input from './components/Input';
+import SelectInput from './components/SelectInput';
 import { LastFMContext } from './context/LastFMContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column',
-
+    justifyContent: 'space-around',
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
     },
   },
   container: {
@@ -25,18 +24,22 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [username, setUsername] = React.useState('');
+  const [username, setUsername] = useState('');
+  const [numberOfArtists, setNumberOfArtists] = useState(5);
+
   const {
     action: { getUsernameData, formatMessage },
     state: { userData, message },
-  } = React.useContext(LastFMContext);
+  } = useContext(LastFMContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(userData);
+
     if (userData) {
-      formatMessage(10);
+      formatMessage(numberOfArtists);
     }
-  }, [userData, formatMessage]);
+
+  }, [userData, formatMessage, numberOfArtists]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,15 +49,23 @@ function App() {
   return (
     <div className='App'>
       <h1>My Last Week FM</h1>
-      <div className={classes.container}>
+      <div>
         <form onSubmit={handleSubmit} className={classes.root}>
-          <Input
-            name={'username'}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder={'Your LastFM Username'}
-            label={'LastFM Username'}
-          />
+          <div style={{ display: 'flex' }}>
+            <Input
+              name={'username'}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder={'Your LastFM Username'}
+              label={'LastFM Username'}
+            />
+            <SelectInput
+              value={numberOfArtists}
+              label={'Artists'}
+              items={[5, 10, 15, 20, 30]}
+              onChange={(e) => setNumberOfArtists(e.target.value)}
+            />
+          </div>
           <Button
             variant='contained'
             color='secondary'

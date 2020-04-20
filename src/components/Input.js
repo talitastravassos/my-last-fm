@@ -2,10 +2,6 @@ import { makeStyles, TextField } from '@material-ui/core';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
   cssLabel: {
     '&:not(hover):not($disabled):not($cssFocused):not($error)': {
       color: '#d92323',
@@ -15,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cssOutlinedInput: {
+    color: '#d92323',
     '&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline': {
       borderColor: '#d92323', //default
     },
@@ -40,7 +37,6 @@ export default function Input({ value, placeholder, name, label, onChange }) {
     <TextField
       label={label}
       placeholder={placeholder}
-      classes={classes.textField}
       name={name}
       value={value}
       variant='outlined'
