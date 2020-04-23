@@ -22,21 +22,76 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const numberArtistsOptions = [
+  {
+    label: '5',
+    value: 5,
+  },
+  {
+    label: '10',
+    value: 10,
+  },
+  {
+    label: '15',
+    value: 15,
+  },
+  {
+    label: '20',
+    value: 20,
+  },
+  {
+    label: '30',
+    value: 30,
+  },
+];
+
+// 'overall', '7day', '1month', '3month', '6month', '12month'
+const periodOptions = [
+  {
+    label: 'Week',
+    value: '7day',
+  },
+  {
+    label: 'Month',
+    value: '1month',
+  },
+  {
+    label: '3 Months',
+    value: '3month',
+  },
+  {
+    label: '6 Months',
+    value: '6month',
+  },
+  {
+    label: 'Year',
+    value: '12month',
+  },
+  {
+    label: 'Overall',
+    value: 'overall',
+  },
+];
+
 function App() {
   const classes = useStyles();
   const [username, setUsername] = useState('');
-  const [numberOfArtists, setNumberOfArtists] = useState(5);
+  const [numberOfArtists, setNumberOfArtists] = useState({
+    label: '5',
+    value: 5,
+  });
 
   const {
-    action: { getUsernameData, formatMessage },
-    state: { userData, message },
+    action: { getUsernameData, formatMessage, setPeriod },
+    state: { userData, message, period },
   } = useContext(LastFMContext);
 
   useEffect(() => {
     console.log(userData);
+    // console.log(numberOfArtists)
 
     if (userData) {
-      formatMessage(numberOfArtists);
+      formatMessage(numberOfArtists.value);
     }
 
   }, [userData, formatMessage, numberOfArtists]);
@@ -48,7 +103,7 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>My Last Week FM</h1>
+      <h1>My Last FM</h1>
       <div>
         <form onSubmit={handleSubmit} className={classes.root}>
           <div style={{ display: 'flex' }}>
@@ -60,10 +115,22 @@ function App() {
               label={'LastFM Username'}
             />
             <SelectInput
-              value={numberOfArtists}
+              value={numberOfArtists.value}
               label={'Artists'}
-              items={[5, 10, 15, 20, 30]}
-              onChange={(e) => setNumberOfArtists(e.target.value)}
+              items={numberArtistsOptions}
+              onChange={(e) => setNumberOfArtists({ ...numberOfArtists, value: e.target.value })}
+            />
+            <SelectInput
+              value={period.value}
+              label={'Period'}
+              items={periodOptions}
+              onChange={(e) => {
+                let newLabel = periodOptions.filter(item => e.target.value === item.value)
+                setPeriod({
+                  label: newLabel[0].label,
+                  value: e.target.value
+                })
+              }}
             />
           </div>
           <Button

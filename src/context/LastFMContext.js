@@ -6,16 +6,20 @@ export const LastFMContext = createContext();
 export default function LastFMProvider(props) {
   const [userData, setUserData] = useState();
   const [message, setMessage] = useState();
+  const [period, setPeriod] = useState({
+    label: 'Week',
+    value: '7day',
+  });
 
   const getUsernameData = async (username) => {
     try {
       const response = await api.get(
-        `?method=user.getweeklyartistchart&user=${username}&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&format=json`
+        `?method=user.gettopartists&user=${username}&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&format=json&period=${period.value}`
       );
-      // console.log(response)
+      console.log(response);
 
       if (response) {
-        setUserData(response.data.weeklyartistchart.artist);
+        setUserData(response.data.topartists.artist);
       }
     } catch (error) {
       setUserData(undefined);
@@ -29,7 +33,7 @@ export default function LastFMProvider(props) {
 
   const formatMessage = (until = 5) => {
     if (userData) {
-      let message = `My Week on LastFM:${userData.map((artist, index) =>
+      let message = `My ${period.label} on LastFM:${userData.map((artist, index) =>
         index < until ? formatArtist(artist) : ''
       )}`;
 
@@ -39,14 +43,20 @@ export default function LastFMProvider(props) {
     }
   };
 
+  // React.useEffect(() => {
+  //   console.log(period)
+  // }, [period])
+
   const value = {
     action: {
       getUsernameData,
       formatMessage,
+      setPeriod,
     },
     state: {
       userData,
       message,
+      period,
     },
   };
 

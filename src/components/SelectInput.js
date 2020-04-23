@@ -50,8 +50,8 @@ export default function SelectInput({ label, value, items, onChange }) {
       >
         {items
           ? items.map((item, index) => (
-            <MenuItem value={item} key={index}>
-              {item}
+            <MenuItem value={item.value} key={index}>
+              {item.label}
             </MenuItem>
           ))
           : ''}
