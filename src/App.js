@@ -10,7 +10,7 @@ import { LastFMContext } from './context/LastFMContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     '& > *': {
       margin: theme.spacing(1),
     },
@@ -93,7 +93,6 @@ function App() {
     if (userData) {
       formatMessage(numberOfArtists.value);
     }
-
   }, [userData, formatMessage, numberOfArtists]);
 
   const handleSubmit = async (event) => {
@@ -104,9 +103,9 @@ function App() {
   return (
     <div className='App'>
       <h1>My Last FM</h1>
-      <div>
+      <div style={{ margin: '3rem' }}>
         <form onSubmit={handleSubmit} className={classes.root}>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <Input
               name={'username'}
               value={username}
@@ -118,18 +117,25 @@ function App() {
               value={numberOfArtists.value}
               label={'Artists'}
               items={numberArtistsOptions}
-              onChange={(e) => setNumberOfArtists({ ...numberOfArtists, value: e.target.value })}
+              onChange={(e) =>
+                setNumberOfArtists({
+                  ...numberOfArtists,
+                  value: e.target.value,
+                })
+              }
             />
             <SelectInput
               value={period.value}
               label={'Period'}
               items={periodOptions}
               onChange={(e) => {
-                let newLabel = periodOptions.filter(item => e.target.value === item.value)
+                let newLabel = periodOptions.filter(
+                  (item) => e.target.value === item.value
+                );
                 setPeriod({
                   label: newLabel[0].label,
-                  value: e.target.value
-                })
+                  value: e.target.value,
+                });
               }}
             />
           </div>
@@ -138,13 +144,10 @@ function App() {
             color='secondary'
             type='submit'
             endIcon={<AllInclusive />}
-            size='large'
           >
             Go
 					</Button>
         </form>
-      </div>
-      <div className='box-container'>
         {userData && message ? <Box message={message} /> : <></>}
       </div>
     </div>

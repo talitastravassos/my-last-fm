@@ -27,10 +27,21 @@ const useStyles = makeStyles((theme) => ({
     color: '#d92323',
   },
   error: {},
-  disabled: {},
+  disabled: {
+    color: '#f71414',
+    borderColor: '#d9232394'
+  },
 }));
 
-export default function Input({ value, placeholder, name, label, onChange }) {
+export default function Input({
+  value,
+  placeholder,
+  name,
+  label,
+  onChange,
+  multiline,
+  disabled,
+}) {
   const classes = useStyles();
 
   return (
@@ -40,11 +51,14 @@ export default function Input({ value, placeholder, name, label, onChange }) {
       name={name}
       value={value}
       variant='outlined'
+      multiline={multiline}
+      disabled={disabled}
+      fullWidth={multiline}
       onChange={onChange}
       InputLabelProps={{
         classes: {
           root: classes.cssLabel,
-          focused: classes.cssFocused,
+          focused: classes.cssFocused
         },
       }}
       InputProps={{
@@ -52,6 +66,7 @@ export default function Input({ value, placeholder, name, label, onChange }) {
           root: classes.cssOutlinedInput,
           focused: classes.cssFocused,
           notchedOutline: classes.notchedOutline,
+          disabled: classes.disabled,
         },
       }}
     />
