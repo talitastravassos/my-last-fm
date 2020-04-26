@@ -1,5 +1,5 @@
 import { Button, makeStyles } from '@material-ui/core';
-import { AllInclusive } from '@material-ui/icons';
+import { AllInclusive, Edit, Twitter } from '@material-ui/icons';
 import React, { useContext, useEffect, useState } from 'react';
 import './App.scss';
 import Box from './components/Box';
@@ -80,9 +80,10 @@ function App() {
     label: '5',
     value: 5,
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   const {
-    action: { getUsernameData, formatMessage, setPeriod },
+    action: { getUsernameData, formatMessage, setPeriod, setMessage },
     state: { userData, message, period },
   } = useContext(LastFMContext);
 
@@ -148,7 +149,30 @@ function App() {
             Go
 					</Button>
         </form>
-        {userData && message ? <Box message={message} /> : <></>}
+        {userData && message ? (
+          <>
+            <Box message={message} disabled={isEdit} setMessage={setMessage} />
+            <div className='buttons-container'>
+              {!isEdit ? (
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  endIcon={<Edit />}
+                  onClick={() => setIsEdit(!isEdit)}
+                >
+                  Edit
+                </Button>
+              ) : (
+                  <></>
+                )}
+              <Button variant='contained' color='primary' endIcon={<Twitter />}>
+                Tweet
+							</Button>
+            </div>
+          </>
+        ) : (
+            <></>
+          )}
       </div>
     </div>
   );

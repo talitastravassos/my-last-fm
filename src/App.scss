@@ -12,3 +12,12 @@
 .form button {
 	margin: 1rem;
 }
+
+.buttons-container {
+	display: flex;
+	justify-content: flex-end;
+
+	button {
+		margin: 1rem;
+	}
+}
