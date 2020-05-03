@@ -1,6 +1,6 @@
-import { Button, makeStyles } from '@material-ui/core';
-import { AllInclusive, Twitter } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
+import { FaLastfm, FaTwitter } from 'react-icons/fa';
 import './App.scss';
 import Box from './components/Box';
 import Input from './components/Input';
@@ -10,7 +10,7 @@ import { LastFMContext } from './context/LastFMContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     '& > *': {
       margin: theme.spacing(1),
     },
@@ -139,22 +139,27 @@ function App() {
               }}
             />
           </div>
-          <Button
-            variant='contained'
-            color='secondary'
-            type='submit'
-            endIcon={<AllInclusive />}
-          >
-            Go
-					</Button>
+          <button type='submit' className='btn-search'>
+            <span>Search</span>
+            <FaLastfm />
+          </button>
         </form>
         {userData && message ? (
           <>
             <Box message={message} />
             <div className='buttons-container'>
-              <Button variant='contained' color='primary' endIcon={<Twitter />}>
-                Tweet
-							</Button>
+              <a
+                href={
+                  'https://twitter.com/intent/tweet?hashtags=mylastfm&text=' +
+                  message
+                }
+                target='_blank'
+                rel='noopener noreferrer'
+                className='btn-twitter'
+              >
+                <span>Tweet</span>
+                <FaTwitter />
+              </a>
             </div>
           </>
         ) : (

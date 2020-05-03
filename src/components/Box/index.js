@@ -4,7 +4,7 @@ import './styles.scss';
 export default function Box({ message }) {
 
   return (
-    <div style={{ margin: '2rem auto', width: '80%' }}>
+    <div style={{ margin: '2rem auto' }}>
       <div className="box">
         <p>
           {message}
