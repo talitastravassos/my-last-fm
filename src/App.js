@@ -11,14 +11,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
     '& > *': {
       margin: theme.spacing(1),
     },
   },
-  container: {
+  inputContainer: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
   },
 }));
 
@@ -105,7 +111,7 @@ function App() {
       <h1>My Last FM</h1>
       <div style={{ margin: '3rem' }}>
         <form onSubmit={handleSubmit} className={classes.root}>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          <div className={classes.inputContainer}>
             <Input
               name={'username'}
               value={username}
