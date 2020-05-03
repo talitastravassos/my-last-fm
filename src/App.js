@@ -108,7 +108,7 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>My Last FM</h1>
+      <h1 className="title">My Last FM</h1>
       <div style={{ margin: '3rem' }}>
         <form onSubmit={handleSubmit} className={classes.root}>
           <div className={classes.inputContainer}>
