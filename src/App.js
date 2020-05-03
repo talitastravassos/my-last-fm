@@ -88,14 +88,12 @@ function App() {
   });
 
   const {
-    action: { getUsernameData, formatMessage, setPeriod },
+    action: { getUsernameData, formatMessage, setPeriod, setUserData },
     state: { userData, message, period },
   } = useContext(LastFMContext);
 
   useEffect(() => {
     console.log(userData);
-    // console.log(numberOfArtists)
-
     if (userData) {
       formatMessage(numberOfArtists.value);
     }
@@ -142,6 +140,7 @@ function App() {
                   label: newLabel[0].label,
                   value: e.target.value,
                 });
+                setUserData(null)
               }}
             />
           </div>

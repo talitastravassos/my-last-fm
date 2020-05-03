@@ -52,7 +52,8 @@ export default function LastFMProvider(props) {
       getUsernameData,
       formatMessage,
       setPeriod,
-      setMessage
+      setMessage,
+      setUserData
     },
     state: {
       userData,
